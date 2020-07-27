@@ -2,12 +2,16 @@
 //import axios from 'axios'
 export const strict = false
 export const state = () => ({
-    user : 'no user',
     authUser: false,
 })
 // common getters
 export const getters ={
-
+  isLoggedIn (state) {
+    return !!state.authUser
+  },
+  getAuthUser (state) {
+    return state.authUser
+  },
 }
 //mutations for changing data from action
 export const mutations = {

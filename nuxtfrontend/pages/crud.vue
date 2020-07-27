@@ -249,17 +249,15 @@ export default {
 
 	async created(){
     
-        this.loading = true
-		const [res1,res2, res3, res4] = await Promise.all([ 
- 			this.callApi('get',`all_product?page=${this.page}`),
-			])
-			if(res1.status == 200) {
-                 this.ProductData= res1.data.data
-                 this.pagination = res1.data
-			}
-			else{
-				this.swr()
-			}
+		this.loading = true
+		const res = await this.callApi('get',`all_product?page=${this.page}`)
+		if(res.status == 200) {
+				this.ProductData= res.data.data
+				this.pagination = res.data
+		}
+		else{
+			this.swr()
+		}
 		this.loading = false
 	}, 
 	

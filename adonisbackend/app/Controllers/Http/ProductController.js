@@ -1,5 +1,6 @@
 'use strict'
 const Product = use('App/Models/Product')
+const User = use('App/Models/User')
 class ProductController {
   
     async product_add({request,response}){
@@ -32,6 +33,37 @@ class ProductController {
         await Product.query().where('id',reqData.id).delete()
         return await Product.query().orderBy('id','desc').paginate(page,7)
       }
+
+
+
+      async login({ request, response, auth }){
+
+        const { email, password } = request.all()
+        let user = await auth.attempt(email, password)
+        return response.status(200).json(user)
+            // return 'Logged in successfully'
+        // const data = request.all()
+        //   try {
+        //     console.log(data)
+        //     let user = await auth.query().attempt(data.email, data.password)  
+    
+        //     const { email, password } = request.all()
+        //     await auth.attempt(email, password)
+    
+        //     return 'Logged in successfully'
+    
+    
+        //     // return response.status(200).json(user) 
+        //   } catch (e) {
+        //       console.log(e.message)
+        //       return response.status(401).json(
+        //           {
+        //               'msg': 'Invalid email or password. Please try again.'
+        //           }
+        //       )
+        //   }
+      }
+
 
 }
 

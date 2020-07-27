@@ -34,14 +34,16 @@ export default {
   ** Global CSS
   */
   css: [
-    'iview/dist/styles/iview.css'
+    'iview/dist/styles/iview.css',
+    'vuetify/dist/vuetify.min.css'
   ],
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '@/plugins/iview'
+    '@/plugins/iview',
+    '@/plugins/vuetify',
   ],
   /*
   ** Auto import components
@@ -51,7 +53,9 @@ export default {
   /*
   ** Nuxt.js dev-modules
   */
+
   buildModules: [
+    '@nuxtjs/vuetify',
   ],
   /*
   ** Nuxt.js modules

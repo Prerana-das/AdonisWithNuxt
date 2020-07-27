@@ -6,11 +6,16 @@ Vue.use(iView, {
   locale
 })
 
-
+import { mapActions, mapGetters } from 'vuex';
 // mixins for using common methods
 
 Vue.mixin({
-
+    computed: {
+        ...mapGetters({
+            authUser:'getAuthUser',
+            isLoggedIn:'isLoggedIn',
+        }),
+    },
   methods: {
       i(msg, i = 'Hey!') {
           this.$Notice.info({

@@ -21,11 +21,13 @@ Route.get('/', () => {
 })
 
 Route.get('/login', 'UserController.user')
-Route.get('/myuser', 'UserController.getUser')
-Route.post('/post', 'UserController.getUser')
 
 Route.get('/logout', 'UserController.logout')
 
+
+
+Route.post('/register', 'UserController.register')
+Route.post('/login', 'ProductController.login')
 
 
 Route.post('/product_add', 'ProductController.product_add')
