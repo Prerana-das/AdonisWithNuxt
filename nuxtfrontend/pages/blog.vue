@@ -156,13 +156,13 @@ export default {
         },
         
     async blog_add(){
-			// if(!this.isLoggedIn){
-			// 	return this.i("Please Login first  !")
-			// }
+			if(!this.isLoggedIn){
+				return this.i("Please Login first  !")
+			}
 			if(this.formItem.title.trim()=='') return this.e('Name is required')
 			if(this.formItem.description.trim()=='') return this.e('Description is required')
-			// if(this.formItem.image=='') return this.e('Image is required')
-			// this.formItem.user_id=this.authUser.id
+			if(this.formItem.image=='') return this.e('Image is required')
+			this.formItem.user_id=this.authUser.id
 			this.loading = true
      		 const res = await this.callApi('post',`blog_add?page=${this.page}`,this.formItem)
 			if(res.status==200){

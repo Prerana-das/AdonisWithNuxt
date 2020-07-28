@@ -39,9 +39,21 @@
 										<h4>{{blogData.description}}</h4>
 										<div class="single-blog-social">
 											<ul>
-												<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-												<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-												<li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+												<li @click="wishlists(blogData)">
+												<span v-if="blogData.__meta__">{{blogData.__meta__.totalLike_count}}</span>
+													<i class="far fa-thumbs-up"></i> 
+													<span v-if="blogData.wishlist">
+														<span v-if="blogData.wishlist.isTrue == 0">
+															Like
+														</span>
+														<span v-else>
+															Unlike
+														</span>
+													</span>
+													<span v-else>
+														Like
+													</span>
+												</li>
 											</ul>
 										</div>
 									</div>
@@ -141,7 +153,6 @@
 </template>
 
 <script>
-// import moment from "moment";
 export default {
    
     data(){
@@ -157,10 +168,11 @@ export default {
                 isTrue:'',
             },
 		   blog_id:'',
+		   user_id:'',
 		   blogData:{},
 		   commentData:[],
 		   commentCount:'',
-		//    moment:moment
+		   
        }
 	},
 	 methods: {
@@ -171,6 +183,7 @@ export default {
 				if(item.wishlist){
 					if(item.wishlist.isTrue==0){
 						this.wishItem.isTrue=1
+						console.log('checkkkkkkkkkk');
 					}
 					else{
 						this.wishItem.isTrue=0
@@ -180,10 +193,21 @@ export default {
 				this.wishItem.user_id=this.authUser.id
 				const res = await this.callApi('post','add_wishlists',this.wishItem)
 				if(res.status==201){
-					// this.s('This item added to your favorite list!')
+					this.s('Like!')
+					this.blogData.wishlist = {
+						isTrue:1
+					}
 				}
 				else if(res.status==200){ 
-
+					// this.s('UnLike!')
+					this.blogData.wishlist.isTrue = this.wishItem.isTrue
+					if(this.blogData.wishlist.isTrue==1){
+						this.blogData.__meta__.totalLike_count +=1
+					}
+					else{
+						this.blogData.__meta__.totalLike_count -=1
+					}
+					
 				}
 				else{
 					this.swr()
@@ -210,19 +234,16 @@ export default {
 					this.swr();
 				}
 			},
-			isMonthDate(date) {
-				return moment(date).format("MMM Do");
-			},
-			isTime(date) {
-				return moment(date).format('h:mm a');
-			},
 			
 		}, 
     async created(){
 		this.blog_id = this.$route.params.id
+		if(this.authUser){
+			this.user_id = this.authUser.id
+		}
 
 		const [res1,res2,res3] = await Promise.all([ 
-			this.callApi('get',`single_blog?blog_id=${this.blog_id}`),
+			this.callApi('get',`single_blog?blog_id=${this.blog_id}&user_id=${this.user_id}`),
 			this.callApi('get',`all_comment?blog_id=${this.blog_id}`),
 			this.callApi('get',`comment_count?blog_id=${this.blog_id}`),
 		])
@@ -234,8 +255,6 @@ export default {
 		else{
 			this.swr()
 		}
-
-		// this.$store.commit('setAuthUser', (window.authUser));
 
     }
 }

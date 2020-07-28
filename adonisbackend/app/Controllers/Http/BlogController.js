@@ -67,8 +67,20 @@ class BlogController {
 
       async single_blog({request,response}){
         let blog_id = request.input('blog_id');
-        return await Blog.query().with('user').where('id',blog_id).first()
-      }
+        let user_id = request.input('user_id');
+        return await Blog.query()
+                    .with('user')
+                    .withCount('totalLike', (builder) => {
+                        builder.where('blog_id', blog_id)
+                               .where('isTrue', 1)
+                    })
+                    .with('wishlist', (builder) => {
+                      builder.where('user_id', user_id)
+                    })
+                    .where('id',blog_id)
+                    .first()
+        }
+
 
 
       async post_comment({request,response}){
@@ -87,7 +99,11 @@ class BlogController {
 
       async all_comment({request,response}){
         let blog_id = request.input('blog_id');
-        return await Comment.query().with('user').where('blog_id',blog_id).orderBy('id','desc').fetch()
+        return await Comment.query()
+          .with('user')
+          .where('blog_id',blog_id)
+          .orderBy('id','desc')
+          .fetch()
       }
 
       async comment_count({request,response}){
@@ -96,11 +112,26 @@ class BlogController {
       }
 
       async add_wishlists({request,response}){
-       
+        let data = request.all()
+        if(data){
+          let check = await Wishlist.query().where('blog_id',data.blog_id)
+          .where('user_id',data.user_id)
+          .update({
+            isTrue:data.isTrue,
+          })
+          if(check){
+            return check;
+          }
+          else{
+           return await Wishlist.create(
+              {
+                  user_id:data.user_id,
+                  blog_id:data.blog_id,
+                  isTrue:1,
+              })
+          }
+        }
       }
-
-
-   
 
 
 }

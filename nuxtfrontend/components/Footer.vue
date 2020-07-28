@@ -1,7 +1,7 @@
 <template>
  <div>
    <!-- Footer Area Start -->
-		<footer class="footer-area">
+		<!-- <footer class="footer-area">
 			<div class="footer-bottom">
 				<div class="container">
 					<div class="footer-navbar">
@@ -33,7 +33,7 @@
 					</div>
 				</div>
 			</div>
-		</footer>
+		</footer> -->
 		<!-- Footer Area End -->
  </div>
 </template>

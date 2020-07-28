@@ -7,6 +7,10 @@ class Wishlist extends Model {
     user() {
         return this.belongsTo('App/Models/User')
     }
+
+    blog() {
+        return this.belongsTo('App/Models/Blog')
+    }
 }
 
 module.exports = Wishlist
