@@ -20,7 +20,7 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 
-Route.get('/login', 'UserController.user')
+// Route.get('/login', 'UserController.user')
 Route.get('/myuser', 'UserController.getUser')
 
 
@@ -28,7 +28,7 @@ Route.get('/myuser', 'UserController.getUser')
 //User
 Route.get('/logout', 'UserController.logout')
 Route.post('/register', 'UserController.register')
-Route.post('/login', 'UserController.login')
+Route.post('/login', 'ProductController.login')
 
 //Product
 Route.post('/product_add', 'ProductController.product_add')
@@ -40,9 +40,22 @@ Route.get('/all_product', 'ProductController.all_product')
 Route.post('/blog_add', 'BlogController.blog_add')
 Route.get('/all_blog', 'BlogController.all_blog')
 
-
+//Image
 Route.post('/upload', 'BlogController.upload')
 Route.post('/delete_image', 'BlogController.delete_image')
+
+//Single Blog
+Route.get('/single_blog', 'BlogController.single_blog')
+
+//Comment
+Route.post('/post_comment', 'BlogController.post_comment')
+Route.get('/all_comment', 'BlogController.all_comment')
+Route.get('/comment_count', 'BlogController.comment_count')
+
+//Like
+Route.post('/add_wishlists', 'BlogController.add_wishlists')
+
+
 
 
 

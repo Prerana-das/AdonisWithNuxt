@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.11.0",
     "iview": "^3.5.4",
+    "moment": "^2.27.0",
     "nuxt": "^2.13.0",
     "vuetify": "^2.3.6"
   },

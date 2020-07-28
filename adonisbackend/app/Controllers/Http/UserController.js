@@ -11,14 +11,12 @@ class UserController {
        }
    }
   async getUser({request, response, params, auth}){
-    //   try {
-    //     const user = await auth.getUser()
-    //     console.log('cookie is.. haha', request.headers())
-
-    //     return user
-    //   } catch (error) {
-    //       return 'not logged in ... '
-    //   }
+    try {
+      let user = await auth.getUser()
+        return user
+    } catch (error) {
+        return
+    }
   }
 
 
@@ -48,11 +46,7 @@ class UserController {
     return response.status(201).json(data) 
   }
 
-  async login({ request, response, auth }){
-    const { email, password } = request.all()
-    let user = await auth.attempt(email, password)
-    return response.status(200).json(user)
-  }
+ 
 
   async logout({request, response,session, params, auth}){
         session.clear()

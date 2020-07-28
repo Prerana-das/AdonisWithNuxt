@@ -113,7 +113,7 @@
                 return;
             }
         	this.loading = true
-        	const res = await this.callApi('post','register',this.formItem)
+        	const res = await this.callApi('post',`register`,this.formItem)
           if(res.status==201){
             this.s('Registration successfully!')
             this.formItem={}

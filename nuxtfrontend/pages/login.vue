@@ -72,7 +72,7 @@
     methods: {
       async login () {
         	this.loading = true
-        	const res = await this.callApi('post','login',this.formItem)
+        	const res = await this.callApi('post',`login`,this.formItem)
           if(res.status==200){
             this.s('Login successful!')
             this.formItem={}

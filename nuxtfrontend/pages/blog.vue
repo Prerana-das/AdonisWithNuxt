@@ -47,7 +47,7 @@
 													:on-success="handleSuccess"
 													:format="['jpg','jpeg','png']"
 													:max-size="2048"
-													action="http://127.0.0.1:3333/upload">
+													action="http://localhost:3333/upload">
 													<div style="padding: 20px 0">
 													<Icon type="ios-cloud-upload" size="32" style="color: #3399ff"></Icon>
 													<p>Upload Image</p>
@@ -61,10 +61,10 @@
 											<div>
 												<img v-if="formItem.image" :src="formItem.image" class="w73 h73 border p-0">
 											</div>
-											<div class="float-right ml-auto">
+											<div class="float-right ml-auto" v-if="formItem.image">
 												<div class="float-right btn btn-icon btn-danger btn-sm mt-5">
 													
-													<span @click="deleteImage()"><i class="fa fa-trash-o" ></i> dd</span>
+													<span @click="deleteImage()"><i class="fa fa-trash-o" ></i>Delete</span>
 												</div>
 											</div>
 										</div>
@@ -156,13 +156,13 @@ export default {
         },
         
     async blog_add(){
-			if(!this.isLoggedIn){
-				return this.i("Please Login first  !")
-			}
+			// if(!this.isLoggedIn){
+			// 	return this.i("Please Login first  !")
+			// }
 			if(this.formItem.title.trim()=='') return this.e('Name is required')
 			if(this.formItem.description.trim()=='') return this.e('Description is required')
-			if(this.formItem.image=='') return this.e('Image is required')
-			this.formItem.user_id=this.authUser.id
+			// if(this.formItem.image=='') return this.e('Image is required')
+			// this.formItem.user_id=this.authUser.id
 			this.loading = true
      		 const res = await this.callApi('post',`blog_add?page=${this.page}`,this.formItem)
 			if(res.status==200){

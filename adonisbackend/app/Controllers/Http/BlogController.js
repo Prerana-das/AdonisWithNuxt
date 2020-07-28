@@ -1,6 +1,8 @@
 'use strict'
 const Blog = use('App/Models/Blog')
 const User = use('App/Models/User')
+const Wishlist = use('App/Models/Wishlist')
+const Comment = use('App/Models/Comment')
 const Helpers = use('Helpers')
 const Env = use('Env')
 const fs = require('fs')
@@ -22,7 +24,7 @@ class BlogController {
 
     async all_blog({request,response}){
         let page = request.input('page');
-        return await Blog.query().orderBy('id','desc').paginate(page,7)
+        return await Blog.query().with('user').orderBy('id','desc').paginate(page,7)
       }
 
 
@@ -63,21 +65,42 @@ class BlogController {
             return;
       }
 
+      async single_blog({request,response}){
+        let blog_id = request.input('blog_id');
+        return await Blog.query().with('user').where('id',blog_id).first()
+      }
 
-    // public function deleteImage(Request $request){
-    //     $fileName = $request->imageName; 
-    //     $this->deleteFileFromServer($fileName, false);
-    //     return 'done';
-    // }
-    // public function deleteFileFromServer($fileName, $hasFullPath = false){
-    //     if(!$hasFullPath){
-    //         $filePath = public_path().$fileName;
-    //     }
-    //     if(file_exists($filePath)){
-    //         @unlink($filePath);
-    //     }
-    //     return;
-    // }
+
+      async post_comment({request,response}){
+        let reqData = request.all()
+        await Comment.create(
+            {
+                user_id:reqData.user_id,
+                blog_id:reqData.blog_id,
+                description:reqData.description,
+            }
+        )
+        return await Comment.query().with('user').orderBy('id','desc').first()
+      }
+
+      
+
+      async all_comment({request,response}){
+        let blog_id = request.input('blog_id');
+        return await Comment.query().with('user').where('blog_id',blog_id).orderBy('id','desc').fetch()
+      }
+
+      async comment_count({request,response}){
+        let blog_id = request.input('blog_id');
+        return await Comment.query().where('blog_id',blog_id).getCount();
+      }
+
+      async add_wishlists({request,response}){
+       
+      }
+
+
+   
 
 
 }
