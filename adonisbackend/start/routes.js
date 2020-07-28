@@ -21,19 +21,33 @@ Route.get('/', () => {
 })
 
 Route.get('/login', 'UserController.user')
+Route.get('/myuser', 'UserController.getUser')
 
+
+
+//User
 Route.get('/logout', 'UserController.logout')
-
-
-
 Route.post('/register', 'UserController.register')
-Route.post('/login', 'ProductController.login')
+Route.post('/login', 'UserController.login')
 
-
+//Product
 Route.post('/product_add', 'ProductController.product_add')
 Route.post('/delete_product', 'ProductController.delete_product')
 Route.post('/update_product', 'ProductController.update_product')
 Route.get('/all_product', 'ProductController.all_product')
+
+//Blog
+Route.post('/blog_add', 'BlogController.blog_add')
+Route.get('/all_blog', 'BlogController.all_blog')
+
+
+Route.post('/upload', 'BlogController.upload')
+Route.post('/delete_image', 'BlogController.delete_image')
+
+
+
+
+
 
 
 

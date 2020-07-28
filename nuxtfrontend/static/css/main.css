@@ -947,9 +947,6 @@ p {
   ._3login_form {
       margin-top: 63px;
   }
-  ._3login_input_group {
-      margin-bottom: 30px;
-  }
   ._3login_input_group input{}
   ._3login_input_button {
       text-align: center;
@@ -3857,8 +3854,9 @@ a.all-tour-btn{
 	font-size:14px;
 	padding:10px 20px;
 }
-.blog-content{
-	text-align:center;
+.blog-content {
+  text-align: center;
+  padding: 15px 20px;
 }
 .blog-content ul{
 	padding:10px 0px;
@@ -4022,7 +4020,7 @@ a.all-tour-btn{
 	background-image: url(../images/shutterstock-661.jpg);
 }
 .tour-promo-content,.destination-promo-content,.gallery-promo-content,.blog-promo-content, .contact-promo-content,.faq-promo-content{
-	padding:200px 0px;	
+	padding:90px 0px;	
 }
 .tour-promo-content h1,.destination-promo-content h1,.gallery-promo-content h1,.blog-promo-content h1,.contact-promo-content h1,.faq-promo-content h1{
 	font-size:42px;
@@ -4214,8 +4212,9 @@ a.all-tour-btn{
 .blog-promo-content p{
 	color:#fff;
 }
-.single-blog{
-	margin-bottom:50px;
+.single-blog {
+  margin-bottom: 50px;
+  border: 1px solid #e4e8ec;
 }
 .blog-img img{
    height:100%;	

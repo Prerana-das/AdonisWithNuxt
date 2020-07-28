@@ -20,14 +20,14 @@
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link class="js-scroll-trigger" to="/">Blog</router-link>
+                                    <router-link class="js-scroll-trigger" to="/blog">Blog</router-link>
                                 </li>
                                 <li class="nav-item">
                                     <router-link class="js-scroll-trigger" to="/crud">Product Crud</router-link>
                                 </li>
                             </ul>
                         <div class="login_area">
-                            <template v-if="!isLoggedIn">
+                            <template v-if="isLoggedIn">
                                 <ul class="nav-list nav-open" id="nav">
                                 <li class="nav-item">
                                         <router-link class="js-scroll-trigger" to="/login">Login</router-link>
