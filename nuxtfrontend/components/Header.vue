@@ -9,9 +9,9 @@
                     <div class="main-menu">
                         <div class="navbar-collapse nav_div">
                         <div class="logo">
-                             <a class="js-scroll-trigger" href="team.html">
-                                <img src="images/travello.png" alt="travello" />
-                            </a>
+                            <router-link class="js-scroll-trigger" to="/">
+                                <img src="/../images/travello.png" alt="travello" />
+                             </router-link>
                         </div>
                             <ul class="nav-list nav-open" id="nav">
                                 <li class="nav-item">
@@ -38,7 +38,7 @@
                                 </ul>
                             </template>
                             <template v-else>
-                                 <p class="js-scroll-trigger" @click="logout">Logout</p>
+                                 <p class="js-scroll-trigger" style="cursor:pointer" @click="logout">Logout</p>
                             </template>
                         </div>
                         </div>

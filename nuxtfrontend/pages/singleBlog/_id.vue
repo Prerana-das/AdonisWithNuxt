@@ -40,7 +40,7 @@
 										<div class="single-blog-social">
 											<ul>
 												<li @click="wishlists(blogData)">
-												<span v-if="blogData.__meta__">{{blogData.__meta__.totalLike_count}}</span>
+												<span v-if="blogData.__meta__" class="total_like">{{blogData.__meta__.totalLike_count}}</span>
 													<i class="far fa-thumbs-up"></i> 
 													<span v-if="blogData.wishlist">
 														<span v-if="blogData.wishlist.isTrue == 0">
@@ -180,7 +180,7 @@ export default {
 				if(!this.authUser){ 
 						return this.i("Please Login First  !")
 					}
-				if(item.wishlist){
+				if(item.wishlist!=null){
 					if(item.wishlist.isTrue==0){
 						this.wishItem.isTrue=1
 						console.log('checkkkkkkkkkk');
@@ -193,10 +193,11 @@ export default {
 				this.wishItem.user_id=this.authUser.id
 				const res = await this.callApi('post','add_wishlists',this.wishItem)
 				if(res.status==201){
-					this.s('Like!')
+					// this.s('Like!')
 					this.blogData.wishlist = {
 						isTrue:1
 					}
+					this.blogData.__meta__.totalLike_count +=1
 				}
 				else if(res.status==200){ 
 					// this.s('UnLike!')
@@ -226,7 +227,7 @@ export default {
 
 				if(res.status==200){
 					this.s("Comment Successful");
-					this.commentData.push(res.data)
+					this.commentData.unshift(res.data)
 					this.commentCount+=1
 					this.commentItem.description = ''
 				}

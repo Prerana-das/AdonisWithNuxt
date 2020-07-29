@@ -57,7 +57,6 @@
                         color="success"
                         class="mr-4 mt-4"
                         @click="register"
-                        :loading="loading"
                       >
                         {{loading ? 'Registering...' : 'Register'}}
                       </v-btn>

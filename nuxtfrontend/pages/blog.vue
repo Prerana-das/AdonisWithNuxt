@@ -7,7 +7,7 @@
 					<div class="col-lg-8 text-center mx-auto">
 						<div class="blog-promo-content">
 							<h1>Blog</h1>
-              <Button class="_mar_b30" type="primary" @click="addModal = true">Create Blog</Button>
+              			<Button class="_mar_b30 create_btnn" type="primary" @click="addModal = true">Create Blog</Button>
 						</div>
 					</div>
 				</div>	
@@ -94,7 +94,7 @@
 				<div class="blog">
 					<div class="row">
 						<div v-for="(item,index) in BlogData" :key="index" class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-							<div class="single-blog">
+							<div class="single-blog _box_shadow">
 								<div class="blog-img">
 									<nuxt-link :to="`/singleBlog/${item.id}`">
 										<img :src="item.image" alt="blog" />
@@ -103,6 +103,10 @@
 								</div>
 								<div class="blog-content">
 									<ul>
+										<li>{{item.__meta__.totalLike_count}} Like</li>
+										<li v-if="item.user" class="_mar_b10 author_name">
+											<strong>Author:</strong> {{item.user.name}}
+										</li>
 										<li>{{item.created_at}}</li>
 									</ul>
 									<h4>{{item.description}}</h4>
@@ -135,14 +139,11 @@ export default {
         page:1,
         pagination: {},
         loading:false,
-        imageUrl:'',			
-				listMethod:true,
 
 		}
 	},
 
 	methods : {
-	
 		async getpaginate(page = 1){
 			const res  = await this.callApi('get',`all_blog?page=${page}`)
 			if(res.status == 200){
@@ -155,47 +156,48 @@ export default {
 			}
         },
         
-    async blog_add(){
-			if(!this.isLoggedIn){
-				return this.i("Please Login first  !")
-			}
-			if(this.formItem.title.trim()=='') return this.e('Name is required')
-			if(this.formItem.description.trim()=='') return this.e('Description is required')
-			if(this.formItem.image=='') return this.e('Image is required')
-			this.formItem.user_id=this.authUser.id
-			this.loading = true
-     		 const res = await this.callApi('post',`blog_add?page=${this.page}`,this.formItem)
+		async blog_add(){
+				if(!this.isLoggedIn){
+					return this.i("Please Login first  !")
+				}
+				if(this.formItem.title.trim()=='') return this.e('Name is required')
+				if(this.formItem.description.trim()=='') return this.e('Description is required')
+				if(this.formItem.image=='') return this.e('Image is required')
+				this.formItem.user_id=this.authUser.id
+				this.loading = true
+				const res = await this.callApi('post',`blog_add?page=${this.page}`,this.formItem)
+				if(res.status==200){
+					this.addModal=false
+					this.s('Blog added successfully!')
+					this.BlogData = res.data.data
+					this.pagination = res.data
+					this.formItem={}
+				}
+				else{
+					this.swr();
+		}
+		this.loading = false
+		},
+    
+   		 //upload 
+		handleSuccess (res, file) {
+			this.formItem.image = res
+		},
+
+		//delete img from server
+		async deleteImage(){
+			var url = this.formItem.image;
+			console.log(url);
+			var get_id =url.split("http://localhost:3333/uploads/");
+			var imgName = get_id[get_id.length-1]
+			const res = await this.callApi('post', 'delete_image', {imageName: imgName})
 			if(res.status==200){
-				this.addModal=false
-				this.s('Blog added successfully!')
-				this.BlogData = res.data.data
-				this.pagination = res.data
-				this.formItem={}
+				this.formItem.image=''
 			}
 			else{
-				this.swr();
-      }
-      this.loading = false
-    },
-    
-    //upload multipleimg
-			handleSuccess (res, file) {
-				this.formItem.image = res
-			},
-
-			//delete img from server
-			async deleteImage(){
-				
-				const res = await this.callApi('post', 'delete_image', {imageName: this.formItem.image})
-				if(res.status!=200){
-
-					this.swr()
-				}
-				this.isSending=false
-			},
-	
-		
-		
+				this.swr()
+			}
+		},
 	}, 
 
 	async created(){

@@ -28,7 +28,7 @@ Route.get('/myuser', 'UserController.getUser')
 //User
 Route.get('/logout', 'UserController.logout')
 Route.post('/register', 'UserController.register')
-Route.post('/login', 'ProductController.login')
+Route.post('/login', 'UserController.login')
 
 //Product
 Route.post('/product_add', 'ProductController.product_add')

@@ -35,7 +35,6 @@
                   color="success"
                   class="mr-4 mt-4"
                   @click="login"
-                  :loading="loading"
                 >
                   {{loading ? 'Loging...' : 'Login'}}
                 </v-btn>

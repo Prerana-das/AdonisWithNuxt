@@ -46,6 +46,12 @@ class UserController {
     return response.status(201).json(data) 
   }
 
+  async login({ request, response, auth }){
+    const { email, password } = request.all()
+    let user = await auth.attempt(email, password)
+    return response.status(200).json(user)
+  }
+
  
 
   async logout({request, response,session, params, auth}){

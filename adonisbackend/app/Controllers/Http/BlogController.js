@@ -19,12 +19,24 @@ class BlogController {
             }
         )
         let page = request.input('page');
-        return await Blog.query().orderBy('id','desc').paginate(page,7)
+        return await Blog.query()
+                          .with('user')
+                          .withCount('totalLike', (builder) => {
+                            builder.where('isTrue', 1)
+                          })
+                          .orderBy('id','desc')
+                          .paginate(page,7)
     }
 
     async all_blog({request,response}){
         let page = request.input('page');
-        return await Blog.query().with('user').orderBy('id','desc').paginate(page,7)
+        return await Blog.query()
+                          .with('user')
+                          .withCount('totalLike', (builder) => {
+                            builder.where('isTrue', 1)
+                          })
+                          .orderBy('id','desc')
+                          .paginate(page,7)
       }
 
 
@@ -46,23 +58,21 @@ class BlogController {
 
     async delete_image({request,response}){
         let fileName = request.input('imageName');
-        this.deleteFileFromServer(fileName, false);
-        return 'done';
-      }
-    async deleteFileFromServer({fileName ,hasFullPath=false}){
-        // let fileNamee = request.input('imageName');
-        if(!hasFullPath){
-                filePath = public_path().fileName;
-            }
-            if(filePath){
-                try {
-                    fs.unlinkSync(filePath)
-                    //file removed
-                  } catch(err) {
-                    console.error(err)
-                  }
-            }
-            return;
+        if(fileName){
+              try {
+                fs.unlink("./public/uploads/"+fileName, (err) => {
+                    if (err) {
+                        console.log("failed to delete local image:"+err);
+                    } else {
+                        console.log('successfully deleted local image');                    
+                    }
+                  });
+                 
+                } catch(err) {
+                  return response.status(204).json()
+                }
+          }
+          return response.status(200).json()            
       }
 
       async single_blog({request,response}){
@@ -82,7 +92,7 @@ class BlogController {
         }
 
 
-
+       //Comment
       async post_comment({request,response}){
         let reqData = request.all()
         await Comment.create(
@@ -94,9 +104,6 @@ class BlogController {
         )
         return await Comment.query().with('user').orderBy('id','desc').first()
       }
-
-      
-
       async all_comment({request,response}){
         let blog_id = request.input('blog_id');
         return await Comment.query()
@@ -111,6 +118,7 @@ class BlogController {
         return await Comment.query().where('blog_id',blog_id).getCount();
       }
 
+      //Like
       async add_wishlists({request,response}){
         let data = request.all()
         if(data){
@@ -123,12 +131,14 @@ class BlogController {
             return check;
           }
           else{
-           return await Wishlist.create(
+           let createdata= await Wishlist.create(
               {
                   user_id:data.user_id,
                   blog_id:data.blog_id,
                   isTrue:1,
               })
+
+              return response.status(201).json(createdata) 
           }
         }
       }
