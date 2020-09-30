@@ -25,6 +25,9 @@
                                 <li class="nav-item">
                                     <router-link class="js-scroll-trigger" to="/crud">Product Crud</router-link>
                                 </li>
+                                <li class="nav-item">
+                                    <router-link class="js-scroll-trigger" to="/chat">Chat</router-link>
+                                </li>
                             </ul>
                         <div class="login_area">
                             <template v-if="!isLoggedIn">

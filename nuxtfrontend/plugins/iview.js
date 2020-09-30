@@ -48,24 +48,42 @@ Vue.mixin({
               desc: 'Something went wrong, please try again later'
           });
       },
-      async callApi(method, url, dataObj) {
-          try {
-              let data = await this.$axios({
-                  config: {
-                    withCredentials: true
-                  },
-                  method: method,
-                  url: url,
-                  data: dataObj,
+    //   async callApi(method, url, dataObj) {
+    //       try {
+    //           let data = await this.$axios({
+    //               config: {
+    //                 withCredentials: true
+    //               },
+    //               method: method,
+    //               url: url,
+    //               data: dataObj,
 
-              })
-              return data
+    //           })
+    //           return data
 
-          } catch (e) {
+    //       } catch (e) {
 
-              return e.response
-          }
-      },
+    //           return e.response
+    //       }
+    //   },
+    async callApi(method, url, dataObj) {
+        try {
+            let data = await this.$axios({
+                config: {
+                  withCredentials: true
+                },
+                method: method,
+                url: url,
+                data: dataObj,
+
+            })
+            return data
+
+        } catch (e) {
+
+            return e.response
+        }
+    },
 
 
   }

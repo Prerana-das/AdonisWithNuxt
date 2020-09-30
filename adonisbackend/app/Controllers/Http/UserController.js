@@ -48,8 +48,9 @@ class UserController {
 
   async login({ request, response, auth }){
     const { email, password } = request.all()
-    let user = await auth.attempt(email, password)
-    return response.status(200).json(user)
+    // let user = await auth.attempt(email, password)
+    return auth.attempt(email, password)
+    // return;
   }
 
  
@@ -57,6 +58,10 @@ class UserController {
   async logout({request, response,session, params, auth}){
         session.clear()
         return await auth.logout()
+  }
+
+  async getAllUser({request, response, params, auth}){
+    return await User.all();
   }
 
 }

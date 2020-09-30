@@ -55,6 +55,15 @@ Route.get('/comment_count', 'BlogController.comment_count')
 //Like
 Route.post('/add_wishlists', 'BlogController.add_wishlists')
 
+//New
+Route.get('/getAllUser', 'UserController.getAllUser')
+
+//chat
+Route.get('/chatWithLastPerson/:id', 'ChatController.chatWithLastPerson')
+Route.post('/addChat', 'ChatController.addChat')
+
+
+
 
 
 
