@@ -1,19 +1,26 @@
 <template>
   <div>
-      <div>
+      <div class="user_list_area">
           <h5>User List</h5>
-          <ul v-for="(item,index) in userData" :key="index">
-            <li @click="selectChatPerson(item,index)">{{item.id}} - {{item.name}}</li>
+          <ul class="user_list">
+            <li v-for="(item,index) in userDataList" :key="index">
+              <span @click="selectChatPerson(item,index)">{{item.id}} - {{item.name}}</span>
+            </li>
           </ul>
       </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+   computed: {
+    ...mapGetters({
+      userDataList: "messenger/getUserList",
+    }),
+  },
     data(){
 		  return {
-       userData:[],
        getChatsForSingleCon:[]
     }
   },
@@ -36,26 +43,12 @@ export default {
         },
     },
     
-  	async created(){
-      const res = await this.callApi('get',`getAllUser`)
-      if(res.status == 200) {
-          this.userData= res.data
-      }
-		else{
-			this.swr()
-		}
-	}, 
-    // async asyncData({ app, params, query }) {
-    //   try {
-    //     const res = await app.$axios.get(`/getAllUser`);
-    //     if (res.status == 200) {
-    //       userData = res.data;
-    //     }
-    //     return {
-    //       userData: userData,
-    //     };
-    //   } catch (e) {}
-    // },
+  mounted() {
+    if (this.userDataList.length > 0) {
+      this.getChats(this.userDataList[0].id);
+    }
+  },
+
 }
 </script>
 

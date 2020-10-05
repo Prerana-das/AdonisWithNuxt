@@ -75,7 +75,6 @@ Vue.mixin({
                 method: method,
                 url: url,
                 data: dataObj,
-
             })
             return data
 

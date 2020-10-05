@@ -2,6 +2,7 @@ export const strict = false
 
 export const state = () => ({
     lastChats: [],
+    userData:[],
     activePerson: {},
 })
 export const getters = {
@@ -11,6 +12,9 @@ export const getters = {
     getActivePerson(state) {
         return state.activePerson
     },
+    getUserList(state) {
+        return state.userData
+    },
 }
 export const mutations = {
     setLastChats(state, data) {
@@ -18,6 +22,9 @@ export const mutations = {
     },
     setActivePerson(state, data) {
         state.activePerson = data
+    },
+    setUserList(state, data) {
+        state.userData = data
     },
 }
 

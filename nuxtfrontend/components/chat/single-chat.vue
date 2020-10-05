@@ -1,48 +1,49 @@
 <template>
   <div>
       <div>
-          Conversation
+          <h5 class="chat_title">Chat</h5>
 
-          <template v-if="getLastChats.length > 0">
             <div class="chat-inbox full-width">
-              <div v-for="(item, chat_index) in getLastChats" :key="chat_index">
-                <div
-                  v-if="item.message_sender != authUser.id"
-                  :id="`m-${item.id}`"
-                  class="chat-inbox-msg chat-owner-msg chat-justify-left"
-                >
-                  <div class="chat-msg-container">
-                    <div class="chat-msg-item">{{ item.message }}</div>
-                    <div class="chat-msg-time">
-                      {{ item.created_at }}
-                    </div>
-                  </div>
-                  <div class="chat-msg-img">
-                    <template v-if="item.sender_image">
-                      <img :src="item.sender_image.image" />
-                    </template>
-                  </div>
-                </div>
-
-              
-                <div
-                  v-else
-                  :id="`m-${item.id}`"
-                  class="chat-inbox-msg chat-owner-msg chat-justify-right"
-                >
-                  <div class="chat-msg-container">
-                    <div class="chat-msg-item">{{ item.message }}</div>
-                    <div class="chat-msg-time">
+              <template v-if="getLastChats.length > 0">
+                <div v-for="(item, chat_index) in getLastChats" :key="chat_index">
+                  <div
+                    v-if="item.message_sender != authUser.id"
+                    :id="`m-${item.id}`"
+                    class="chat-inbox-msg chat-owner-msg chat-justify-left"
+                  >
+                    <div class="chat-msg-container">
+                      <div class="chat-msg-item">{{ item.message }}</div>
+                      <div class="chat-msg-time">
                         {{ item.created_at }}
+                      </div>
+                    </div>
+                    <div class="chat-msg-img">
+                        <img src="/../images/profile.png" alt="" />
                     </div>
                   </div>
-                  <div class="chat-msg-img">
-                    <img :src="authUser.image" alt="self" />
+
+                
+                  <div
+                    v-else
+                    :id="`m-${item.id}`"
+                    class="chat-inbox-msg chat-owner-msg chat-justify-right"
+                  >
+                    <div class="chat-msg-container">
+                      <div class="chat-msg-item">{{ item.message }}</div>
+                      <div class="chat-msg-time">
+                          {{ item.created_at }}
+                      </div>
+                    </div>
+                    <div class="chat-msg-img">
+                      <img src="/../images/profile.png" alt="" />
+                    </div>
                   </div>
                 </div>
-              </div>
+                </template>
+              <template v-else>
+                  <p>You are up to date!</p>
+              </template>
             </div>
-          </template>
 
           <div class="chat-message-sender-input">
               <div class="chat-message-input">
@@ -97,8 +98,6 @@ export default {
       };
 
       this.getLastChats.push(obj);
-
-      this.form.receiver = receiver;
 
       this.form.receiver = receiver;
       const res = await this.callApi("post","addChat",this.form);
