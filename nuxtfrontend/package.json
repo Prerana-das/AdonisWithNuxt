@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.11.0",
     "@nuxtjs/moment": "^1.6.1",
+    "emoji-mart-vue": "^2.6.6",
     "iview": "^3.5.4",
     "moment": "^2.27.0",
     "nuxt": "^2.13.0",
