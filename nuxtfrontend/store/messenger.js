@@ -26,6 +26,12 @@ export const mutations = {
     setUserList(state, data) {
         state.userData = data
     },
+    pushIntoLastChats(state, data) {
+        let sound = "/pull-out.mp3";
+        let audio = new Audio(sound);
+        audio.play();
+        state.lastChats.push(data)
+    },
 }
 
 export const actions = {

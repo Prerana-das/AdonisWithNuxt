@@ -28,6 +28,16 @@ export default {
       { rel: 'stylesheet', href: "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,900&display=swap" },
       { rel: 'stylesheet', href: "https://use.fontawesome.com/releases/v5.8.2/css/all.css" },
       { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' },
+    ],
+    script: [
+      {
+        src: 'https://code.jquery.com/jquery-3.4.0.min.js',
+        integrity: 'sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=',
+        crossorigin: "anonymous"
+      },
+      { src: "/js/poly.js", body: true },
+      { src: "/js/adonis.js", body: true },
+
     ]
   },
   /*
@@ -63,6 +73,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/moment'
   ],
   /*
   ** Axios module configuration

@@ -2,7 +2,9 @@
   <div>
       <div>
           <h5 class="chat_title">Chat</h5>
-
+              <div class="chat-user-info">
+                <h3 class="capitalize">{{ activePerson.name }}</h3>
+              </div>
             <div class="chat-inbox full-width">
               <template v-if="getLastChats.length > 0">
                 <div v-for="(item, chat_index) in getLastChats" :key="chat_index">
@@ -103,10 +105,9 @@ export default {
       const res = await this.callApi("post","addChat",this.form);
 
       if (res.status == 200) {
-        // let sound = "/pull-out.mp3";
-        // let audio = new Audio(sound);
-        // audio.play();
-     
+        let sound = "/pull-out.mp3";
+        let audio = new Audio(sound);
+        audio.play();
         // this.$store.commit("messenger/updateLastMessageToChatList",this.getLastChats[this.getLastChats.length - 1]);
       
       } else {

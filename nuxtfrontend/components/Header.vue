@@ -20,13 +20,16 @@
                                     </router-link>
                                 </li>
                                 <li class="nav-item">
-                                    <router-link class="js-scroll-trigger" to="/blog">Blog</router-link>
+                                    <router-link class="js-scroll-trigger" to="/blog">Blogs</router-link>
                                 </li>
                                 <li class="nav-item">
                                     <router-link class="js-scroll-trigger" to="/crud">Product Crud</router-link>
                                 </li>
                                 <li class="nav-item">
                                     <router-link class="js-scroll-trigger" to="/chat">Chat</router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="js-scroll-trigger" to="/video">Videos</router-link>
                                 </li>
                             </ul>
                         <div class="login_area">

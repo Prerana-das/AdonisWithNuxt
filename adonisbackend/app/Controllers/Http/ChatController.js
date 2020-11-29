@@ -3,6 +3,11 @@ const { validate, rule } = use('Validator')
 const User = use('App/Models/User')
 const Conversation = use('App/Models/Conversation')
 const Chat = use('App/Models/Chat')
+
+// classes
+const NotificationClass = use("App/Classes/NotificationClass");
+const Notification = new NotificationClass();
+
 class ChatController {
 
   async chatWithLastPerson({ request, response, auth, params }) {
@@ -15,13 +20,22 @@ class ChatController {
         message: "Invalid Request!",
       });
     }
-    let conversation = await Conversation.findOrCreate({
-      sender: params.id,
-      receiver: user.id
-    }, {
-      sender: params.id,
-      receiver: user.id
-    })
+    let conversation = await Conversation.query()
+                      .where((builder)=>{
+                        builder.where('sender',user.id)
+                        builder.where('receiver',params.id)
+                      })
+                      .orWhere((builder)=>{
+                        builder.where('receiver',user.id)
+                        builder.where('sender',params.id)
+                      }).first();
+        if(!conversation){
+          conversation = await Conversation.create({
+              sender: user.id,
+              receiver: params.id,
+          });
+        }
+      
 
     var [chats, update] = await Promise.all([
       Chat.query()
@@ -35,7 +49,7 @@ class ChatController {
       })
     ]);
 
-    console.log(chats);
+    // console.log(chats);
 
     return {
       chats: this.formateChat(chats),
@@ -53,7 +67,6 @@ class ChatController {
     }
 
     const data = request.body;
-    console.log('data', data)
 
     let receiver = await User.query().where("id", data.receiver).first();
     receiver = receiver.toJSON();
@@ -76,30 +89,17 @@ class ChatController {
           seen: 0,
           deleted: 0,
         });
+        Notification.sendChatWSNotificaiton(
+          conversation.id,
+          data.message,
+          data.receiver,
+          chat.id,
+          user,
+        );
 
      
       return chat;
     } 
-    else {
-      // create a new conversation...
-      var con = await Conversation.create({
-        sender: user.id,
-        receiver: data.receiver,
-      });
-
-      if (con) {
-        const chat = await Chat.create({
-          message_sender: user.id,
-          message_receiver: data.receiver,
-          conversation_id: con.id,
-          message: data.message,
-          seen: 0,
-          deleted: 0,
-        });
-
-        return chat;
-      }
-    }
   }
 
    // static functions

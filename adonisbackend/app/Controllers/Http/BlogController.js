@@ -3,6 +3,7 @@ const Blog = use('App/Models/Blog')
 const User = use('App/Models/User')
 const Wishlist = use('App/Models/Wishlist')
 const Comment = use('App/Models/Comment')
+const ImportantVideo = use('App/Models/ImportantVideo')
 const Helpers = use('Helpers')
 const Env = use('Env')
 const fs = require('fs')
@@ -35,6 +36,13 @@ class BlogController {
                           .withCount('totalLike', (builder) => {
                             builder.where('isTrue', 1)
                           })
+                          .orderBy('id','desc')
+                          .paginate(page,7)
+      }
+
+    async all_video({request,response}){
+        let page = request.input('page');
+        return await ImportantVideo.query()
                           .orderBy('id','desc')
                           .paginate(page,7)
       }

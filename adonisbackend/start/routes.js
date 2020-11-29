@@ -40,6 +40,9 @@ Route.get('/all_product', 'ProductController.all_product')
 Route.post('/blog_add', 'BlogController.blog_add')
 Route.get('/all_blog', 'BlogController.all_blog')
 
+//Video
+Route.get('/all_video', 'BlogController.all_video')
+
 //Image
 Route.post('/upload', 'BlogController.upload')
 Route.post('/delete_image', 'BlogController.delete_image')

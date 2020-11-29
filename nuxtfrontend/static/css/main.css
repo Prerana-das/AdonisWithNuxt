@@ -2397,7 +2397,7 @@ button._mar_b30.create_btnn {
   max-width: -webkit-max-content;
   max-width: -moz-max-content;
   max-width: max-content;
-  background-color: #007de3;
+  background-color: #718da4;
   color: #fefefe;
 }
 
@@ -2657,6 +2657,7 @@ button._mar_b30.create_btnn {
     padding: 20px;
     border: 1px solid #ddd;
     margin-top: 15px;
+    border-radius: 5px;
 }
 
 .chat-inbox::-webkit-scrollbar-track {
@@ -2711,4 +2712,16 @@ button._mar_b30.create_btnn {
   margin-bottom: 15px;
   font-size: 17px;
   cursor: pointer;
+}
+.chat-user-info {
+  padding: 10px;
+  background-color: #718da4;
+  color: #fff;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin-top: 13px;
+}
+
+.chat-user-info h3 {
+  color: #fff!important;
 }

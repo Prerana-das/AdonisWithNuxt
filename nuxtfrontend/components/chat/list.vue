@@ -48,6 +48,14 @@ export default {
       this.getChats(this.userDataList[0].id);
     }
   },
+  created(){
+    
+     let obj = {
+          id: this.userDataList[0].id,
+          name: this.userDataList[0].name
+      };
+     this.$store.commit("messenger/setActivePerson", obj);
+  }
 
 }
 </script>
